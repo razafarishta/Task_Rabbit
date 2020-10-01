@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "158637660260",
+    "firebase_url": "https://auth-250df.firebaseio.com",
+    "project_id": "auth-250df",
+    "storage_bucket": "auth-250df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158637660260:android:58994bf0fe38d1841aa771",
+        "android_client_info": {
+          "package_name": "com.authentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158637660260-nijtb6ikbsjtibtqnngho0irgsu8st92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.authentication",
+            "certificate_hash": "5676b52250ce9459e7242097488a686be222003f"
+          }
+        },
+        {
+          "client_id": "158637660260-u4r9hjrllsln7clvjd7mcfmlmce0v414.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.authentication",
+            "certificate_hash": "140d44208e216aa44295cf59f8dd76434b2702ed"
+          }
+        },
+        {
+          "client_id": "158637660260-netmu2sctk944p3j6smq64urglrjk5pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Ba0C5mQ2otFc9n5aEaggP90D8kN2K7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158637660260-netmu2sctk944p3j6smq64urglrjk5pf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
