@@ -1,5 +1,6 @@
 import { firebase } from '@react-native-firebase/auth'
 import { Alert } from 'react-native'
+import { exp } from 'react-native-reanimated'
 import {
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
@@ -11,7 +12,7 @@ import {
     SIGNUP_USER_FAIL, 
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
-     LOGIN_USER
+     LOGIN_USER, ISLOGGEDIN_USER
     } 
     from '../actions/types'
     export const nameChanged = (text)=>{
@@ -81,6 +82,7 @@ import {
        return(dispatch)=>{
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then(dispatch({type:LOGIN_USER, user}))
+        // .then(dispatch({type:ISLOGGEDIN_USER}))
         // console.log(user)
         
         
@@ -88,6 +90,13 @@ import {
        }
        
     }
+    // export const loggedIn = (isLoggedIn)=>{
+    //     return{
+    //         type:ISLOGGEDIN_USER,
+    //         payload:isLoggedIn
+    //     }
+
+    // }
     // export const loginUserSuccess=(props)=>{
     //     return(dispatch)=>{
            

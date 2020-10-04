@@ -113,15 +113,16 @@ const SigninScreen =(props)=>{
       props.passwordChanged(text)
   }
   const onButtonPress = ()=>{
-      const {email, password, isLoggedIn}= props
+    console.log(props)
+      const {email, password}= props
       // if (email) {
         
       // }
       props.loginUser({email, password}) 
       // props.loginUserSuccess({isLoggedIn})
       
-      props.navigation.replace('Dashboard')
-      console.log(email, password, isLoggedIn)
+      // props.navigation.replace('Dashboard')
+      console.log(email, password)
   }
     
         return (
@@ -160,7 +161,7 @@ const SigninScreen =(props)=>{
               <Button 
                 title="Log in"
                 buttonStyle={{backgroundColor:'#1ec31e', height:50, marginTop:'5%'}}
-                onPress={()=>onButtonPress(props.email, props.password)}
+                onPress={()=>onButtonPress(props.email, props.password, props.isLoggedIn)}
               />
               <View style={{flexDirection:'row', padding:'5%',justifyContent:'center'}}>
               <Text>Forgot Your password? </Text>
@@ -171,6 +172,7 @@ const SigninScreen =(props)=>{
             </View>
            
           <View style={{flexDirection:'column', alignItems:'center', marginTop:'20%'}}>
+            <FbButton />
             <Text>
               Signed up with Facebook or Google?
             </Text>
@@ -223,9 +225,9 @@ const styles = StyleSheet.create({
     }
 })
 const mapStateToProps = ({auth}) =>{
-  const{email, password} = auth
+  const{email, password, isLoggedIn} = auth
   return{
-    email, password
+    email, password,isLoggedIn
   }
 }
 

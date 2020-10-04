@@ -25,6 +25,10 @@ useEffect(()=>{handleName()},[])
 
     })
   }
+  const handleLogout = ()=>{
+  
+    firebase.auth().signOut().then(()=>props.navigation.navigate('Signin'))
+  }
     return(
         <View style={{flex:1, backgroundColor:'#fff'}}>
             <View style={{
@@ -51,7 +55,7 @@ useEffect(()=>{handleName()},[])
                          padding:10
                          }}>
                       <Text style={{fontSize:16}}>Account</Text>
-                <Text style={{marginLeft:'44%', fontSize:16, fontWeight:'bold'}}>{email}</Text>
+                <Text style={{marginLeft:'40%', fontSize:16, fontWeight:'bold'}}>{email}</Text>
                       </View>
                   </TouchableOpacity>
 
@@ -75,6 +79,14 @@ useEffect(()=>{handleName()},[])
                     </View>
                   </TouchableOpacity>
 
+                  <TouchableOpacity 
+                    onPress={()=> props.navigation.navigate('Address')}
+                  >
+                  <View style={{padding:10,borderTopWidth:0.5, borderBottomWidth:0.5,}}>
+                    <Text style={{fontSize:16}}>Addresses</Text>
+                    </View>
+                  </TouchableOpacity>
+
                   <TouchableOpacity
                     onPress={()=>props.navigation.navigate('Notification')}
                   >
@@ -89,7 +101,9 @@ useEffect(()=>{handleName()},[])
                     </View>
                   </TouchableOpacity>
 
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                  onPress={handleLogout}
+                  >
                   <View style={{padding:10,borderTopWidth:0.5, borderBottomWidth:0.5,}}>
                     <Text style={{fontSize:16, color:'green',textAlign:'center'}}>Logout</Text>
                     </View>

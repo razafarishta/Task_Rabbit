@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text,Dimensions } from 'react-native';
 import { Switch } from 'react-native-paper'; 
+import { LogBox } from 'react-native'
+// YellowBox.ignoreWarnings([
+//     'Require cycle:'
+//   ])
+LogBox.ignoreAllLogs()
+
 const { height, width, fontScale } = Dimensions.get('window');
 
 const NotficationScreen = ()=>{

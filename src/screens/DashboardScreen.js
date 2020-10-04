@@ -8,7 +8,7 @@ const DashboardScreen = ()=>{
     return(
         <View style={{flex:1, backgroundColor:'#fff'}}>
             <ScrollView>
-            <View style={{marginTop:'57%',width:width, height:height/4.7, flexDirection:'row'}}>
+            <View style={{marginTop:'44%',width:width, height:height/4.7, flexDirection:'row'}}>
               
                     <TouchableOpacity 
                     style={{

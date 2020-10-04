@@ -9,7 +9,8 @@ import {
     POSTAL_CHANGED,
     LAST_NAME_CHANGED,
     LOGIN_USER_FAIL,
-    LOGIN_USER_SUCCESS
+    LOGIN_USER_SUCCESS,
+    ISLOGGEDIN_USER
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -48,6 +49,8 @@ export default (state = INITIAL_STATE, action) =>{
                             //     case 
                             case LOGIN_USER:
                                 return{...state, isLoggedIn:true, user:action.payload}
+                                // case ISLOGGEDIN_USER:
+                                //     return{...state, isLoggedIn:true}
                                 // case LOGIN_USER_SUCCESS:
                                 //     return{...state, isLoggedIn:true, user:action.payload}
                             default:
