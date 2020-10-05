@@ -20,8 +20,8 @@ const AccountScreen = ()=>{
   const handleName=()=>{
     firebase.database().ref().child('user/' + firebase.auth().currentUser.uid).on('value', (snapshot) => {
       console.log("abc",snapshot.val())
-      let response = snapshot.val().name
-      let responseLast = snapshot.val().last
+      let response = snapshot.val().first_name
+      let responseLast = snapshot.val().last_name
       let responseEmail = snapshot.val().email
       setname(response)
       setlast(responseLast)

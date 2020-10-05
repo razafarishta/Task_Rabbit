@@ -18,17 +18,19 @@ import AsyncStorage from '@react-native-community/async-storage';
 const { height, width, fontScale } = Dimensions.get('window');
 // console.log(width, height)
 const SigninScreen =(props)=>{
-
+console.log(props)
   const [userInfo, setUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
-
+  // const saveDataa = async()=>{
+  //   const saveData = await AsyncStorage.setItem(
+  //        'user',
+  //        JSON.stringify({email, password})
+  //     )
+  // }
   useEffect(() =>{
-
-  // const saveData = AsyncStorage.setItem(
-  //   'user',
-  //   JSON.stringify({email, password})
-  // )
+    // saveDataa()
+ 
     configureGoogleSign();
   }, [])
 
@@ -172,7 +174,7 @@ const SigninScreen =(props)=>{
             </View>
            
           <View style={{flexDirection:'column', alignItems:'center', marginTop:'20%'}}>
-            <FbButton />
+            <FbButton {...props}/>
             <Text>
               Signed up with Facebook or Google?
             </Text>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {View, Text, TouchableOpacity, Toast, Alert} from 'react-native';
 import {
   AccessToken,
@@ -6,20 +6,20 @@ import {
   GraphRequestManager,
   LoginManager,
 } from 'react-native-fbsdk';
-import "@react-native-firebase/database";
-import { firebase } from '@react-native-firebase/auth';
-export default class FbButton extends Component {
-  state = {
+import '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+const FbButton = (props) => {
+  console.log('fb', props);
+  const [state, setState] = useState({
     userInfo: {},
-    // isLoggedIn: false
-  };   //isLoggedIn: false
-
-  logoutWithFacebook = () => {
+  });
+  let logoutWithFacebook = () => {
     LoginManager.logOut();
-    this.setState({userInfo: {}});
+    setState({userInfo: {}});
   };
 
-  getInfoFromToken = token => {
+  let getInfoFromToken = (token) => {
     const PROFILE_REQUEST_PARAMS = {
       fields: {
         string: 'id,name,first_name,last_name',
@@ -32,7 +32,7 @@ export default class FbButton extends Component {
         if (error) {
           console.log('login info has error: ' + error);
         } else {
-          this.setState({userInfo: user});  //isLoggedIn=true
+          setState({userInfo: user}); //isLoggedIn=true
           console.log('result:', user);
         }
       },
@@ -61,103 +61,136 @@ export default class FbButton extends Component {
   //   );
   // };
 
- loginWithFacebook=()=>{
-  LoginManager.logInWithPermissions(["public_profile", "email"])
-  .then(result => {
-    if (result.isCancelled) {
-      console.log("Login was cancelled");
-    }
-    
-    return AccessToken.getCurrentAccessToken();
-    
-  })
-  .then(data => {
-    console.log(data)
-    const credential = firebase.auth.FacebookAuthProvider.credential(
-      data.accessToken
-    );
-   firebase
-    .auth()
-    .signInWithCredential(credential)
-    .then(result => {
-    //  Toast.show({
-    //   text: "Sucessfully",
-    //   position: "top"
-    // });
-    Alert.alert('login Success')
-   console.log("Successfully Login", result);
- })
-  .catch(error => {
-   console.log("Failed", error);
-     });
-  })
-  .catch(err => {
-    console.log("fail", err);
-  }); 
- }
-// loggedin = ()=>{
-//     if(this.state.isLoggedIn === true){
-//         this.navigation.navigate('Dashboard')
-//     }
-//     else null
-// }
-  state = {userInfo: {}};
+  let loginWithFacebook = () => {
+    LoginManager.logInWithPermissions(['public_profile', 'email'])
+      .then((result) => {
+        if (result.isCancelled) {
+          console.log('Login was cancelled');
+        }
 
-  renderFBButton=()=> {
-    return (
-       <TouchableOpacity
-        //  style={styles.FBbutton}
-         onPress={()=>this.onFBButtonPress()}
-         title="Continue with Facebook"
-       >
-         <Text
-          // style={styles.FBbuttonText}
-          >
-            Continue with Facebook
-         </Text>
-       </TouchableOpacity>
-     );
-   }
- onFBButtonPress = () => {
-    this.loginWithFacebook();
- }
-  render() {
-    //   const navigation =this.props
-    // const isLogin = this.state.userInfo.name;
-    // const buttonText = isLogin ? 'Logout With Facebook' : 'Login From Facebook';
-    // const onPressButton = isLogin
-    //   ? this.logoutWithFacebook
-    //   : this.loginWithFacebook;
-    // return (
-    //   <View>
-    //     <TouchableOpacity
-    //       onPress={onPressButton}
-    //       style={{
-    //         backgroundColor: 'blue',
-    //         padding: 10,
-    //         margin:10,
-    //         width:195,
-    //         marginRight:5,
-    //         // alignItems: 'center',
-    //         alignSelf:'center',
-    //         // textAlign:'center',
-    //         justifyContent: 'center',
-    //       }}>
-    //       <Text style={{textAlign:'center'}}>{buttonText}</Text>
-    //     </TouchableOpacity>
-    //     {/* {this.loggedin()} */}
-    //     {this.state.userInfo.name && (
-          
-    //       <Text style={{fontSize: 16, marginVertical: 16}}>
-    //         Logged in As {this.state.userInfo.name}
-    //       </Text>
-    //     )}
-    //     {/* {this.state.isLoggedIn === true ? (this.props.navigation.navigate('Dashboard')) : null} */}
-    //   </View>
-    return(
+        return AccessToken.getCurrentAccessToken();
+      })
+      .then((data) => {
+        console.log(data);
+        const credential = firebase.auth.FacebookAuthProvider.credential(
+          data.accessToken,
+        );
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then((result) => {
+            //  Toast.show({
+            //   text: "Sucessfully",
+            //   position: "top"
+            // });
+            let email = result.additionalUserInfo.profile.email;
+            // let name = result.additionalUserInfo.profile.name;
+            let first_name = result.additionalUserInfo.profile.first_name;
+            let last_name = result.additionalUserInfo.profile.last_name;
+            let obj = {
+              email,
+              first_name,
+              last_name,
+            };
+            firebase
+              .database()
+              .ref(`user/${firebase.auth().currentUser.uid}`)
+              .set(obj);
+
+            AsyncStorage.setItem('userData', JSON.stringify(obj)).then(() =>
+              console.log('facebook succes'),
+            );
+
+            console.log(
+              'Successfully Login',
+              result.additionalUserInfo.profile,
+            );
+            props.navigation.navigate('Root', {screen: 'Dashboard'});
+          })
+          //  .then(
+
+          //    firebase.database().ref(`user/${firebase.auth().currentUser.uid}`).set(result.name,result.email)
+          //  )
+          .catch((error) => {
+            console.log('Failed', error);
+          });
+      })
+      .catch((err) => {
+        console.log('fail', err);
+      });
+  };
+  // loggedin = ()=>{
+  //     if(this.state.isLoggedIn === true){
+  //         this.navigation.navigate('Dashboard')
+  //     }
+  //     else null
+  // }
+  // setState({userInfo: {}})
+
+  // const renderFBButton = () => {
+  //   return (
+  //     <TouchableOpacity
+  //       //  style={styles.FBbutton}
+  //       onPress={() => onFBButtonPress()}
+  //       title="Continue with Facebook">
+  //       <Text
+  //       // style={styles.FBbuttonText}
+  //       >
+  //         Continue with Facebook
+  //       </Text>
+  //     </TouchableOpacity>
+  //   );
+  // };
+  const onFBButtonPress = () => {
+    loginWithFacebook();
+  };
+  //   const {navigation}= this.props
+  // console.log(this.props)
+  //   const navigation =this.props
+  // const isLogin = this.state.userInfo.name;
+  // const buttonText = isLogin ? 'Logout With Facebook' : 'Login From Facebook';
+  // const onPressButton = isLogin
+  //   ? this.logoutWithFacebook
+  //   : this.loginWithFacebook;
+  // return (
+  //   <View>
+  //     <TouchableOpacity
+  //       onPress={onPressButton}
+  //       style={{
+  //         backgroundColor: 'blue',
+  //         padding: 10,
+  //         margin:10,
+  //         width:195,
+  //         marginRight:5,
+  //         // alignItems: 'center',
+  //         alignSelf:'center',
+  //         // textAlign:'center',
+  //         justifyContent: 'center',
+  //       }}>
+  //       <Text style={{textAlign:'center'}}>{buttonText}</Text>
+  //     </TouchableOpacity>
+  //     {/* {this.loggedin()} */}
+  //     {this.state.userInfo.name && (
+
+  //       <Text style={{fontSize: 16, marginVertical: 16}}>
+  //         Logged in As {this.state.userInfo.name}
+  //       </Text>
+  //     )}
+  //     {/* {this.state.isLoggedIn === true ? (this.props.navigation.navigate('Dashboard')) : null} */}
+  //   </View>
+  return (
     <View>
-      {this.renderFBButton()}
+      <TouchableOpacity
+        //  style={styles.FBbutton}
+        onPress={() => loginWithFacebook()}
+        title="Continue with Facebook">
+        <Text
+        // style={styles.FBbuttonText}
+        >
+          Continue with Facebook
+        </Text>
+      </TouchableOpacity>
     </View>
-    );
-  }
-}
+  );
+};
+export default FbButton;

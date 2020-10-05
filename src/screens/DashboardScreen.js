@@ -1,10 +1,30 @@
-import React from 'react';
-import { View,Dimensions, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useEffect } from 'react';
+import { View,Dimensions, Image, TouchableOpacity, ScrollView, Alert, BackHandler} from 'react-native';
 import {Text} from 'react-native-elements'
 const { height, width, fontScale } = Dimensions.get('window');
 
 
-const DashboardScreen = ()=>{
+const DashboardScreen = (props)=>{
+
+
+    const backAction = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+    
+      useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', backAction);
+    
+        return () =>
+          BackHandler.removeEventListener('hardwareBackPress', backAction);
+      }, []);
     return(
         <View style={{flex:1, backgroundColor:'#fff'}}>
             <ScrollView>
@@ -22,7 +42,9 @@ const DashboardScreen = ()=>{
                         justifyContent:'center',
                         alignItems:'center',
                         flexDirection:'column'
-                        }}>
+                        }}
+                        onPress={()=>props.navigation.navigate('CarRide')}
+                        >
                             <Image
                                 source={require('../assets/car.png')}
                             />
@@ -32,6 +54,7 @@ const DashboardScreen = ()=>{
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                    onPress={()=> props.navigation.navigate('Delivery')}
                     style={{
                         borderColor:'#000', 
                         width:width/2, 

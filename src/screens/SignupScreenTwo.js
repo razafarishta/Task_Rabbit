@@ -35,8 +35,8 @@ const onPostalChange = (text)=>{
     props.postalChanged(text)
 }
 const onButtonPress = ()=>{
-    const {name,last,email, postal, password } = props
-    props.signupUser({name, last,email,postal ,password}) 
+    const {first_name,last_name,email, postal, password } = props
+    props.signupUser({first_name, last_name,email,postal ,password}) 
     props.navigation.navigate('Signin')
 
 }
@@ -47,14 +47,14 @@ const onButtonPress = ()=>{
             <TextInput
                 placeholder="First Name"
                 style={{width: width/2.1 , borderBottomWidth:1,marginRight:8,}}
-                onChangeText={(name) => {onNameChange(name)}}
-                value={props.name}
+                onChangeText={(first_name) => {onNameChange(first_name)}}
+                value={props.first_name}
             />
             <TextInput 
                 placeholder="Last Name"
                 style={{width: width/2 , borderBottomWidth:1 , marginRight:8}}
-                onChangeText={(last) => {onLastNameChange(last)}}
-                value={props.last}
+                onChangeText={(last_name) => {onLastNameChange(last_name)}}
+                value={props.last_name}
             />
             </View>
             <View style={{justifyContent:'center'}}>
@@ -105,7 +105,7 @@ const onButtonPress = ()=>{
                 <Button 
                      title="Sign Up"
                      buttonStyle={{backgroundColor:'#1ec31e', height:50}}
-                     onPress={()=>onButtonPress(props.name, props.email, props.password, props.last, props.postal)}
+                     onPress={()=>onButtonPress(props.first_name, props.email, props.password, props.last_name, props.postal)}
                 />
 
             </View>
@@ -123,10 +123,10 @@ const styles = StyleSheet.create({
 
 })
 const mapStateToProps = ({auth})=>{
-    const {name,email,password, last, postal}= auth
+    const {first_name,email,password, last_name, postal}= auth
     return{
-        name,
-        last,
+        first_name,
+        last_name,
         email,
         postal,
         password

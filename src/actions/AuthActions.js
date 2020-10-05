@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import { firebase } from '@react-native-firebase/auth'
 import { Alert } from 'react-native'
-import { exp } from 'react-native-reanimated'
 import {
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
@@ -12,7 +12,8 @@ import {
     SIGNUP_USER_FAIL, 
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
-     LOGIN_USER, ISLOGGEDIN_USER
+     LOGIN_USER, ISLOGGEDIN_USER,
+     LOGOUT_SUCCESS
     } 
     from '../actions/types'
     export const nameChanged = (text)=>{
@@ -48,10 +49,10 @@ import {
         }
     }
  
-    export const signupUser = ({name,email, password ,last, postal})=>{
+    export const signupUser = ({first_name,email, password ,last_name, postal})=>{
         let user = {
-            name,
-            last,
+            first_name,
+            last_name,
             // accountType:this.state.accountType,
             email,
             postal,
@@ -81,14 +82,36 @@ import {
        } 
        return(dispatch)=>{
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(dispatch({type:LOGIN_USER, user}))
-        // .then(dispatch({type:ISLOGGEDIN_USER}))
-        // console.log(user)
-        
-        
+        .then(() => {
+            AsyncStorage.setItem('userData', JSON.stringify(user)).then(() => {
+                console.log('Successfully')
+            })
+           
+            dispatch({type:LOGIN_USER, user})
+           
+        })
         .catch((Error)=> {alert(Error.message)})
        }
-       
+    
+    }
+
+    export const logout =(navigation)=>{
+        return (dispatch) => {
+            // dispatch({type: LOGOUT_LOADING});
+            try {
+              firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                  AsyncStorage.removeItem('userData').then(() => {
+                    navigation.navigate('Auth', {screen:'Signin'});
+                  });
+                  dispatch({type: LOGOUT_SUCCESS});
+                });
+            } catch (error) {
+            //   dispatch({type: LOGOUT_FAILED});
+            }
+          };
     }
     // export const loggedIn = (isLoggedIn)=>{
     //     return{
