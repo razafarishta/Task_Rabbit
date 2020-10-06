@@ -14,8 +14,10 @@ const AccountScreen = ()=>{
     const[name, setname] =useState(null)
   const[last, setlast] =useState(null)
   const[email, setemail] =useState(null)
+  const[phone, setphone] =useState(null)
 
-
+  
+  
   useEffect(()=>{handleName()},[])
   const handleName=()=>{
     firebase.database().ref().child('user/' + firebase.auth().currentUser.uid).on('value', (snapshot) => {
@@ -23,9 +25,11 @@ const AccountScreen = ()=>{
       let response = snapshot.val().first_name
       let responseLast = snapshot.val().last_name
       let responseEmail = snapshot.val().email
+      let responsePhone = snapshot.val().phone
       setname(response)
       setlast(responseLast)
       setemail(responseEmail)
+      setphone(responsePhone)
 
 
     })
@@ -153,7 +157,7 @@ const AccountScreen = ()=>{
     <Card.Content>
         <View style={{flexDirection:'row',}}>
       <Title>Phone Number</Title>
-      <Paragraph style={{marginLeft:'15%', marginTop:'2%',fontSize:16}}>Your Number</Paragraph>
+    <Paragraph style={{marginLeft:'15%', marginTop:'2%',fontSize:16}}>{phone}</Paragraph>
       </View>
     </Card.Content>
   </Card>

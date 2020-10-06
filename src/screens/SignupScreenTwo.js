@@ -8,6 +8,7 @@ import {
     nameChanged,
     lastNameChanged,
     postalChanged,
+    phoneChanged,
     signupUser,
 } 
 from '../actions/AuthActions'
@@ -34,9 +35,12 @@ const onLastNameChange = (text)=>{
 const onPostalChange = (text)=>{
     props.postalChanged(text)
 }
+const onPhoneChange = (text)=>{
+    props.phoneChanged(text)
+}
 const onButtonPress = ()=>{
-    const {first_name,last_name,email, postal, password } = props
-    props.signupUser({first_name, last_name,email,postal ,password}) 
+    const {first_name,last_name,email, postal, password,phone } = props
+    props.signupUser({first_name, last_name,email,postal ,password, phone}) 
     props.navigation.navigate('Signin')
 
 }
@@ -63,6 +67,8 @@ const onButtonPress = ()=>{
                 style={{width: width/0.9 , borderBottomWidth:1, }}
                 onChangeText={(email)=>{onEmailChange(email)}}
                   value={props.email}
+                  autoCapitalize = 'none'
+                  
             />
             </View>
     <View style={{flexDirection:'row',}}>
@@ -83,6 +89,16 @@ const onButtonPress = ()=>{
             />
             </View>
 
+            <View style={{justifyContent:'center'}}>
+            <TextInput 
+                placeholder="+92-XXXXXXXXXX"
+                style={{width: width/0.9 , borderBottomWidth:1, }}
+                onChangeText={(phone)=>{onPhoneChange(phone)}}
+                  value={props.phone}
+                keyboardType={"numeric"}
+
+            />
+            </View>
             <View
                 style={{
                     marginTop:'40%',
@@ -105,7 +121,7 @@ const onButtonPress = ()=>{
                 <Button 
                      title="Sign Up"
                      buttonStyle={{backgroundColor:'#1ec31e', height:50}}
-                     onPress={()=>onButtonPress(props.first_name, props.email, props.password, props.last_name, props.postal)}
+                     onPress={()=>onButtonPress(props.first_name, props.email, props.password, props.last_name, props.postal, props.phone)}
                 />
 
             </View>
@@ -123,14 +139,15 @@ const styles = StyleSheet.create({
 
 })
 const mapStateToProps = ({auth})=>{
-    const {first_name,email,password, last_name, postal}= auth
+    const {first_name,email,password, last_name, postal,phone}= auth
     return{
         first_name,
         last_name,
         email,
         postal,
-        password
+        password,
+        phone
     }
 }
 
-export default connect(mapStateToProps,{emailChanged,passwordChanged, nameChanged,lastNameChanged,postalChanged, signupUser})(SignupScreenTwo)
+export default connect(mapStateToProps,{emailChanged,passwordChanged, nameChanged,lastNameChanged,postalChanged, phoneChanged, signupUser})(SignupScreenTwo)

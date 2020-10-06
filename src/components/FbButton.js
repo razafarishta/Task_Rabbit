@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {View, Text, TouchableOpacity, Toast, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Toast, Alert, Modal} from 'react-native';
 import {
   AccessToken,
   GraphRequest,
@@ -96,7 +96,7 @@ const FbButton = (props) => {
               .database()
               .ref(`user/${firebase.auth().currentUser.uid}`)
               .set(obj);
-
+            console.log(obj)
             AsyncStorage.setItem('userData', JSON.stringify(obj)).then(() =>
               console.log('facebook succes'),
             );
@@ -105,7 +105,7 @@ const FbButton = (props) => {
               'Successfully Login',
               result.additionalUserInfo.profile,
             );
-            props.navigation.navigate('Root', {screen: 'Dashboard'});
+            props.navigation.navigate('Auth', {screen: 'PhoneNo'});
           })
           //  .then(
 
@@ -119,67 +119,22 @@ const FbButton = (props) => {
         console.log('fail', err);
       });
   };
-  // loggedin = ()=>{
-  //     if(this.state.isLoggedIn === true){
-  //         this.navigation.navigate('Dashboard')
-  //     }
-  //     else null
-  // }
-  // setState({userInfo: {}})
-
-  // const renderFBButton = () => {
-  //   return (
-  //     <TouchableOpacity
-  //       //  style={styles.FBbutton}
-  //       onPress={() => onFBButtonPress()}
-  //       title="Continue with Facebook">
-  //       <Text
-  //       // style={styles.FBbuttonText}
-  //       >
-  //         Continue with Facebook
-  //       </Text>
-  //     </TouchableOpacity>
-  //   );
-  // };
+  // 
   const onFBButtonPress = () => {
     loginWithFacebook();
   };
-  //   const {navigation}= this.props
-  // console.log(this.props)
-  //   const navigation =this.props
-  // const isLogin = this.state.userInfo.name;
-  // const buttonText = isLogin ? 'Logout With Facebook' : 'Login From Facebook';
-  // const onPressButton = isLogin
-  //   ? this.logoutWithFacebook
-  //   : this.loginWithFacebook;
-  // return (
-  //   <View>
-  //     <TouchableOpacity
-  //       onPress={onPressButton}
-  //       style={{
-  //         backgroundColor: 'blue',
-  //         padding: 10,
-  //         margin:10,
-  //         width:195,
-  //         marginRight:5,
-  //         // alignItems: 'center',
-  //         alignSelf:'center',
-  //         // textAlign:'center',
-  //         justifyContent: 'center',
-  //       }}>
-  //       <Text style={{textAlign:'center'}}>{buttonText}</Text>
-  //     </TouchableOpacity>
-  //     {/* {this.loggedin()} */}
-  //     {this.state.userInfo.name && (
-
-  //       <Text style={{fontSize: 16, marginVertical: 16}}>
-  //         Logged in As {this.state.userInfo.name}
-  //       </Text>
-  //     )}
-  //     {/* {this.state.isLoggedIn === true ? (this.props.navigation.navigate('Dashboard')) : null} */}
-  //   </View>
   return (
     <View>
+
+      {/* <Modal visible={moadlopen}>
+      <View style={{flex:1}}>
+        <MaterialIcons 
+          name="close"
+          size={24}
+          onPress={()=> setModalOpen(false)}
+        />
+      </View>
+      </Modal> */}
       <TouchableOpacity
         //  style={styles.FBbutton}
         onPress={() => loginWithFacebook()}
@@ -190,6 +145,7 @@ const FbButton = (props) => {
           Continue with Facebook
         </Text>
       </TouchableOpacity>
+
     </View>
   );
 };

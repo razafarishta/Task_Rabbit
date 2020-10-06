@@ -2,6 +2,7 @@ import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
   NAME_CHANGED,
+  PHONE_CHANGED,
   SIGNUP_USER,
   SIGNUP_USER_FAIL,
   SIGNUP_USER_SUCCESS,
@@ -11,7 +12,7 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER_SUCCESS,
   ISLOGGEDIN_USER,
-  LOGOUT_SUCCESS,
+  LOGOUT_SUCCESS,SUBMIT_NUMBER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +21,7 @@ const INITIAL_STATE = {
   first_name: '',
   last_name: '',
   postal: '',
+  phone:'',
   user: null,
   error: '',
   loading: false,
@@ -39,21 +41,18 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, last_name: action.payload};
     case POSTAL_CHANGED:
       return {...state, postal: action.payload};
+      case PHONE_CHANGED:
+        return{...state, phone: action.payload}
+        case SUBMIT_NUMBER:
+          return{...state, phoneuser: action.payload}
     case SIGNUP_USER:
       return {...state, loading: true};
     case SIGNUP_USER_SUCCESS:
       return {...state, loading: false, user: action.payload};
     case SIGNUP_USER_FAIL:
       return {...state, email: '', password: ''};
-    // case LOGIN_USER:
-    //     return{...state}
-    //     case
     case LOGIN_USER:
       return {...state, user: action.payload};
-    // case ISLOGGEDIN_USER:
-    //     return{...state, isLoggedIn:true}
-    // case LOGIN_USER_SUCCESS:
-    //     return{...state, isLoggedIn:true, user:action.payload}
     case LOGOUT_SUCCESS:
       return {
         ...state,

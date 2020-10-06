@@ -61,7 +61,7 @@ const ProfileScreen = (props) => {
               padding: 10,
             }}>
             <Text style={{fontSize: 16}}>Account</Text>
-            <Text style={{marginLeft: '40%', fontSize: 16, fontWeight: 'bold'}}>
+            <Text style={{marginLeft: '21%', fontSize: 16, fontWeight: 'bold'}}>
               {email}
             </Text>
           </View>

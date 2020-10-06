@@ -31,6 +31,7 @@ import CarRideScreen from './screens/CarRideScreen';
 import DeliveryScreen from './screens/DeliveryScreen';
 import SplashScreen from './screens/SplashScreen';
 import Loading from './screens/Loading';
+import PhoneNoScreen from './screens/PhoneNoScreen';
 // import {loginUser} from '../actions/AuthActions'
 
 // import SignupScreen from './src/screens/SignupScreen';
@@ -44,7 +45,7 @@ const Navigation = (props) => {
   // const [isAuthenticated, setIsAuthenticated] = useState(false)
   const DashboardTab = () => {
     return (
-      <Tab.Navigator tabBarOptions={{showIcon: true, showLabel: false}}>
+      <Tab.Navigator tabBarOptions={{showIcon: true, showLabel: true}}>
         <Tab.Screen
           name="Dashboard"
           component={DashboardScreen}
@@ -75,7 +76,7 @@ const Navigation = (props) => {
   };
   function Auth() {
     return (
-      <Stack.Navigator initialRouteName="Signin">
+      <Stack.Navigator initialRouteName="SignUpp">
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -89,10 +90,25 @@ const Navigation = (props) => {
 
         {/* <Stack.Screen name="Signup" component={SignupScreen}/> */}
         <Stack.Screen name="SignUpp" component={SignupScreenTwo} />
+        <Stack.Screen name="PhoneNo" component={PhoneNoScreen} />
       </Stack.Navigator>
     );
   }
   function Dashboard() {
+
+    const getHeaderTitle =(route)=> {
+      const routeName = getFocusedRouteNameFromRoute(route) ?? 'Dashboard';
+    
+      switch (routeName) {
+        case 'Dashboard':
+          return 'Your Address';
+        case 'OrderHistory':
+          return 'Order History';
+        case 'search':
+          return 'Search It';
+      }
+    }
+
     return (
       <Stack.Navigator>
         <Stack.Screen name="loading" component={Loading} options={{headerShown:false}} />
@@ -101,8 +117,7 @@ const Navigation = (props) => {
           component={DashboardTab}
           options={({navigation, route}) => ({
             //   title:getHeaderTitle(route),
-            title: 'ADDRESS',
-            headerTitle: getFocusedRouteNameFromRoute(route),
+            headerTitle: getHeaderTitle(route),
             headerTintColor: 'green',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -116,15 +131,17 @@ const Navigation = (props) => {
                 onPress={() => navigation.navigate('Profile')}
               />
             ),
-
-            headerRight: () => (
+            
+            headerRight: getFocusedRouteNameFromRoute(route) !== 'search' && 
+            getFocusedRouteNameFromRoute(route) !== 'OrderHistory'
+            ? () => (
               <Entypo
                 name="chevron-down"
                 size={20}
-                style={{paddingRight: width / 3.2}}
+                style={{paddingRight: width / 3.7, justifyContent:'center',paddingTop:5}}
                 onPress={() => navigation.navigate('Address')}
               />
-            ),
+            ) : false,
             headerTitleAlign: 'center',
           })}
         />

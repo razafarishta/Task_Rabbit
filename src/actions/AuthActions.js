@@ -8,6 +8,8 @@ import {
     NAME_CHANGED,
     LAST_NAME_CHANGED,
     POSTAL_CHANGED,
+    PHONE_CHANGED,
+    SUBMIT_NUMBER,
     SIGNUP_USER_SUCCESS, 
     SIGNUP_USER_FAIL, 
     LOGIN_USER_SUCCESS,
@@ -48,15 +50,22 @@ import {
             payload:text
         }
     }
+    export const phoneChanged = (text) =>{
+        return{
+            type:PHONE_CHANGED,
+            payload:text
+        }
+    }
  
-    export const signupUser = ({first_name,email, password ,last_name, postal})=>{
+    export const signupUser = ({first_name,email, password ,last_name, postal, phone})=>{
         let user = {
             first_name,
             last_name,
             // accountType:this.state.accountType,
             email,
             postal,
-            password
+            password,
+            phone
           }
         //   const {navigate} =props
         return (dispatch)=>{
@@ -93,6 +102,17 @@ import {
         .catch((Error)=> {alert(Error.message)})
        }
     
+    }
+
+    export const phoneNo =({phone})=>{
+        let phoneuser = {
+            phone
+        }
+        return(dispatch)=>{
+            firebase.database().ref(`user/${firebase.auth().currentUser.uid}`)
+            .update(phoneuser)
+            dispatch({type:SUBMIT_NUMBER,phoneuser})
+        }
     }
 
     export const logout =(navigation)=>{
