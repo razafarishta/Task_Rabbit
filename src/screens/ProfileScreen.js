@@ -81,7 +81,8 @@ const ProfileScreen = (props) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('OrderHistory')}>
           <View
             style={{padding: 10, borderTopWidth: 0.5, borderBottomWidth: 0.5}}>
             <Text style={{fontSize: 16}}>Order History</Text>

@@ -6,7 +6,7 @@ import { Searchbar } from 'react-native-paper';
 const { height, width, fontScale } = Dimensions.get('window');
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-const LocationSearch =()=>{
+const LocationSearch =({label})=>{
 
     const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -44,8 +44,11 @@ const LocationSearch =()=>{
                    
 
         //         </View>
+        <View style={{width:width/1.05, alignSelf:'center', padding:'5%', paddingTop:'10%'}}>
+          <Text style={{fontWeight:'bold', fontSize:14, color:'green'}}>{label}</Text>
         <GooglePlacesAutocomplete
         placeholder='Search'
+        placeholderTextColor="green"
         minLength={2}
         autoFocus={false}
         returnKeyType={'default'}
@@ -59,6 +62,7 @@ const LocationSearch =()=>{
           language: 'en',
         }}
       />
+      </View>
            
     )
 }

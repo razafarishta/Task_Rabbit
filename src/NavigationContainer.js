@@ -32,6 +32,11 @@ import DeliveryScreen from './screens/DeliveryScreen';
 import SplashScreen from './screens/SplashScreen';
 import Loading from './screens/Loading';
 import PhoneNoScreen from './screens/PhoneNoScreen';
+import FoodDeliveryScreen from './screens/FoodDeliveryScreen';
+import AdminScreen from './screens/AdminScreen';
+import ForgetPassword from './screens/ForgetPassword';
+import pendingScreen from './screens/PendingScreen';
+import GroceryScreen from './screens/GroceryScreen';
 // import {loginUser} from '../actions/AuthActions'
 
 // import SignupScreen from './src/screens/SignupScreen';
@@ -54,14 +59,14 @@ const Navigation = (props) => {
             tabBarIcon: () => <AntDesign name="home" size={30} />,
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="OrderHistory"
           component={OrderHistoryScreen}
           options={{
             title: 'Orders History',
             tabBarIcon: () => <Image source={require('./assets/order.png')} />,
           }}
-        />
+        /> */}
         <Tab.Screen
           name="search"
           component={SearchScreen}
@@ -76,7 +81,7 @@ const Navigation = (props) => {
   };
   function Auth() {
     return (
-      <Stack.Navigator initialRouteName="SignUpp">
+      <Stack.Navigator initialRouteName="Signin">
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -87,18 +92,28 @@ const Navigation = (props) => {
           component={SigninScreen}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="Forget"
+          component={ForgetPassword}
+          options={{headerShown: false}}
+        />
 
         {/* <Stack.Screen name="Signup" component={SignupScreen}/> */}
         <Stack.Screen name="SignUpp" component={SignupScreenTwo} />
-        <Stack.Screen name="PhoneNo" component={PhoneNoScreen} />
+        <Stack.Screen
+          name="PhoneNo"
+          component={PhoneNoScreen}
+          options={{
+            headerTitle: 'Phone Number',
+          }}
+        />
       </Stack.Navigator>
     );
   }
   function Dashboard() {
-
-    const getHeaderTitle =(route)=> {
+    const getHeaderTitle = (route) => {
       const routeName = getFocusedRouteNameFromRoute(route) ?? 'Dashboard';
-    
+
       switch (routeName) {
         case 'Dashboard':
           return 'Your Address';
@@ -107,11 +122,15 @@ const Navigation = (props) => {
         case 'search':
           return 'Search It';
       }
-    }
+    };
 
     return (
       <Stack.Navigator>
-        <Stack.Screen name="loading" component={Loading} options={{headerShown:false}} />
+        <Stack.Screen
+          name="loading"
+          component={Loading}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Dashboard"
           component={DashboardTab}
@@ -131,27 +150,44 @@ const Navigation = (props) => {
                 onPress={() => navigation.navigate('Profile')}
               />
             ),
-            
-            headerRight: getFocusedRouteNameFromRoute(route) !== 'search' && 
-            getFocusedRouteNameFromRoute(route) !== 'OrderHistory'
-            ? () => (
-              <Entypo
-                name="chevron-down"
-                size={20}
-                style={{paddingRight: width / 3.7, justifyContent:'center',paddingTop:5}}
-                onPress={() => navigation.navigate('Address')}
-              />
-            ) : false,
+
+            headerRight:
+              getFocusedRouteNameFromRoute(route) !== 'search' &&
+              getFocusedRouteNameFromRoute(route) !== 'OrderHistory'
+                ? () => (
+                    <Entypo
+                      name="chevron-down"
+                      size={20}
+                      style={{
+                        paddingRight: width / 3.7,
+                        justifyContent: 'center',
+                        paddingTop: 5,
+                      }}
+                      onPress={() => navigation.navigate('Address')}
+                    />
+                  )
+                : false,
             headerTitleAlign: 'center',
           })}
         />
-
+        <Stack.Screen
+          name="Admin"
+          component={AdminScreen}
+          options={{
+            headerShown: 'false',
+            title: 'Admin',
+            headerTintColor: 'green',
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen
           name="CarRide"
           component={CarRideScreen}
           options={{
             headerShown: 'false',
-            
+            title: 'Car Ride',
+            headerTintColor: 'green',
+            headerTitleAlign: 'center',
           }}
         />
 
@@ -159,8 +195,41 @@ const Navigation = (props) => {
           name="Delivery"
           component={DeliveryScreen}
           options={{
+            title: 'Delivery',
+            headerTintColor: 'green',
             headerShown: 'false',
-           
+
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="Food"
+          component={FoodDeliveryScreen}
+          options={{
+            headerShown: 'false',
+            title: 'Food',
+            headerTintColor: 'green',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="Grocery"
+          component={GroceryScreen}
+          options={{
+            headerShown: 'false',
+            title: 'Food',
+            headerTintColor: 'green',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="Pending"
+          component={pendingScreen}
+          options={{
+            headerShown: null,
+            // title: 'Pending',
+            // headerTintColor: 'green',
+            // headerTitleAlign: 'center',
           }}
         />
 
@@ -194,6 +263,19 @@ const Navigation = (props) => {
           component={PaymentScreen}
           options={{
             title: 'Payment',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+        />
+
+        <Stack.Screen
+          name="OrderHistory"
+          component={OrderHistoryScreen}
+          options={{
+            title: 'Orders',
             headerTintColor: 'green',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -280,6 +362,5 @@ const Navigation = (props) => {
     </NavigationContainer>
   );
 };
-
 
 export default Navigation;

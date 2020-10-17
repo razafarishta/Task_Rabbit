@@ -1,128 +1,21 @@
 import React, {Component, useState} from 'react';
 import {View, Text, TouchableOpacity, Toast, Alert, Modal} from 'react-native';
-import {
-  AccessToken,
-  GraphRequest,
-  GraphRequestManager,
-  LoginManager,
-} from 'react-native-fbsdk';
 import '@react-native-firebase/database';
-import {firebase} from '@react-native-firebase/auth';
-import AsyncStorage from '@react-native-community/async-storage';
+import {facebookLogin} from '../actions/AuthActions'
+import Feather from 'react-native-vector-icons/Feather' 
+// import {firebase} from '@react-native-firebase/auth';
+// import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 const FbButton = (props) => {
-  console.log('fb', props);
-  const [state, setState] = useState({
-    userInfo: {},
-  });
-  let logoutWithFacebook = () => {
-    LoginManager.logOut();
-    setState({userInfo: {}});
-  };
+  // console.log('fb', props);
 
-  let getInfoFromToken = (token) => {
-    const PROFILE_REQUEST_PARAMS = {
-      fields: {
-        string: 'id,name,first_name,last_name',
-      },
-    };
-    const profileRequest = new GraphRequest(
-      '/me',
-      {token, parameters: PROFILE_REQUEST_PARAMS},
-      (error, user) => {
-        if (error) {
-          console.log('login info has error: ' + error);
-        } else {
-          setState({userInfo: user}); //isLoggedIn=true
-          console.log('result:', user);
-        }
-      },
-    );
-    new GraphRequestManager().addRequest(profileRequest).start();
-  };
+  const onButtonPress = ()=>{
+    const {first_name,last_name,email, password, navigation} = props
 
-  // loginWithFacebook = () => {
-  //   // Attempt a login using the Facebook login dialog asking for default permissions.
-  //   LoginManager.logInWithPermissions(['public_profile']).then(
-  //     login => {
-  //       if (login.isCancelled) {
-  //         console.log('Login cancelled');
-  //       } else {
-  //         AccessToken.getCurrentAccessToken().then(data => {
-  //           console.log(data)
-  //           const accessToken = data.accessToken.toString();
-  //           this.getInfoFromToken(accessToken);
-  //           // this.setState({isLoggedIn:true})
-  //         });
-  //       }
-  //     },
-  //     error => {
-  //       console.log('Login fail with error: ' + error);
-  //     },
-  //   );
-  // };
+    props.facebookLogin(navigation)
+    // props.navigation.navigate('PhoneNo')
+  }
 
-  let loginWithFacebook = () => {
-    LoginManager.logInWithPermissions(['public_profile', 'email'])
-      .then((result) => {
-        if (result.isCancelled) {
-          console.log('Login was cancelled');
-        }
-
-        return AccessToken.getCurrentAccessToken();
-      })
-      .then((data) => {
-        console.log(data);
-        const credential = firebase.auth.FacebookAuthProvider.credential(
-          data.accessToken,
-        );
-        firebase
-          .auth()
-          .signInWithCredential(credential)
-          .then((result) => {
-            //  Toast.show({
-            //   text: "Sucessfully",
-            //   position: "top"
-            // });
-            let email = result.additionalUserInfo.profile.email;
-            // let name = result.additionalUserInfo.profile.name;
-            let first_name = result.additionalUserInfo.profile.first_name;
-            let last_name = result.additionalUserInfo.profile.last_name;
-            let obj = {
-              email,
-              first_name,
-              last_name,
-            };
-            firebase
-              .database()
-              .ref(`user/${firebase.auth().currentUser.uid}`)
-              .set(obj);
-            console.log(obj)
-            AsyncStorage.setItem('userData', JSON.stringify(obj)).then(() =>
-              console.log('facebook succes'),
-            );
-
-            console.log(
-              'Successfully Login',
-              result.additionalUserInfo.profile,
-            );
-            props.navigation.navigate('Auth', {screen: 'PhoneNo'});
-          })
-          //  .then(
-
-          //    firebase.database().ref(`user/${firebase.auth().currentUser.uid}`).set(result.name,result.email)
-          //  )
-          .catch((error) => {
-            console.log('Failed', error);
-          });
-      })
-      .catch((err) => {
-        console.log('fail', err);
-      });
-  };
-  // 
-  const onFBButtonPress = () => {
-    loginWithFacebook();
-  };
   return (
     <View>
 
@@ -137,16 +30,36 @@ const FbButton = (props) => {
       </Modal> */}
       <TouchableOpacity
         //  style={styles.FBbutton}
-        onPress={() => loginWithFacebook()}
-        title="Continue with Facebook">
+        style={{
+          backgroundColor:'#4267B2',
+           width:190,
+            height:45,
+             alignItems:'center',
+              justifyContent:'center',
+              flexDirection:'row',
+
+            }}
+        onPress={() => onButtonPress(props.first_name, props.last_name, props.email , props.password)}
+        >
+          <Feather 
+            name="facebook"
+            size={20}
+            style={{paddingRight:10}}
+          />
         <Text
         // style={styles.FBbuttonText}
+        style={{color:'#fff', fontSize:14, fontWeight:'bold'}}
         >
-          Continue with Facebook
+          
+          Login with Facebook
         </Text>
       </TouchableOpacity>
+      {/* <LoginButton 
+        onPress={() => onButtonPress(props.first_name, props.last_name, props.email , props.password)}
+        title="Login"
+      /> */}
 
     </View>
   );
 };
-export default FbButton;
+export default connect(null, {facebookLogin})(FbButton);

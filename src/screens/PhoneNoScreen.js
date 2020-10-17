@@ -19,14 +19,18 @@ const PhoneNoScreen =(props)=>{
     }
     
     return(
-        <View style={{flex:1, padding:10}}>
-            <View style={{width:width, flexDirection:'column'}}>
-            <Text>
-                Enter Your Phone Number
+        <View style={{flex:1, padding:10, backgroundColor:'#fff'}}>
+            <View style={{flexDirection:'column', paddingTop:10}}>
+                <View style={{flexDirection:'row'}}>
+            <Text style={{fontSize:fontScale*14}}>
+                Enter Your Phone Number :
             </Text>
 
+            <Text style={{color:'#cc0000'}}> *  (Must contain 11 digits)</Text>
+            </View>
             <TextInput 
-            style={{width: width/0.9 , borderBottomWidth:1, }}
+            style={{ borderBottomWidth:1, }}
+                placeholder="+92-XXXXXXXXXX"
                 onChangeText={(phone)=>{onPhoneChanged(phone)}}
                 value={props.phone}
             
@@ -34,8 +38,19 @@ const PhoneNoScreen =(props)=>{
 
             <TouchableOpacity 
             onPress={()=>onButtonPress(props.phone)} 
-            style={{backgroundColor:'green'}}>
-                <Text>Submit</Text>
+            style={{backgroundColor:'#1ec31e',
+             justifyContent:'center',
+              alignItems:'center',
+              marginTop:15,
+              height:45
+              
+              }}>
+                <Text 
+                style={{
+                    fontSize:16,
+                    color:'#fff'
+                }}>
+                    Submit</Text>
             </TouchableOpacity>
 </View>
         </View>

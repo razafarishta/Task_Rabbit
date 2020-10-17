@@ -11,24 +11,24 @@ import { BackHandler,Alert } from 'react-native';
 
 const App = ()=>{
 
-  // const backAction = () => {
-  //   Alert.alert('Hold on!', 'Are you sure you want to go back?', [
-  //     {
-  //       text: 'Cancel',
-  //       onPress: () => null,
-  //       style: 'cancel',
-  //     },
-  //     {text: 'YES', onPress: () => BackHandler.exitApp()},
-  //   ]);
-  //   return true;
-  // };
+  const backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'YES', onPress: () => BackHandler.exitApp()},
+    ]);
+    return true;
+  };
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
 
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
  
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
     return(

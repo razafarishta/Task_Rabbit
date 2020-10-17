@@ -1,9 +1,9 @@
-import { firebase } from '@react-native-firebase/auth';
+import { firebase} from '@react-native-firebase/auth';
 import React, { useEffect, useState } from 'react';
 import {View, Text, ScrollView, TextInput,Dimensions, StyleSheet,Image, Alert} from 'react-native';
 import database from '@react-native-firebase/database';
 // import Logo from '../assets'
-import {emailChanged, passwordChanged,loginUser} from '../actions/AuthActions'
+import {emailChanged, passwordChanged,loginUser, googleLogin} from '../actions/AuthActions'
 import {WEB_CLIENT_ID} from '../utils/keys'
 import {
   GoogleSigninButton,
@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const { height, width, fontScale } = Dimensions.get('window');
 // console.log(width, height)
 const SigninScreen =(props)=>{
-console.log(props)
+// console.log(props)
   const [userInfo, setUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
@@ -43,55 +43,6 @@ console.log(props)
     })
   }
 
-  const signIn= async ()=>{
-    try {
-      await GoogleSignin.hasPlayServices();
-      // const [accessToken, idToken] =await GoogleSignin.signIn()
-      // const credential = firebase.auth.GoogleAuthProvider.credential(
-      //   idToken,
-      //   accessToken
-      // )
-      // console.log(credential)
-      const userInfo = await GoogleSignin.signIn();
-      console.log('User Info --> ', userInfo)
-      // const googleCredential = auth.GoogleAuthProvider.credential(userInfo);
-      // return auth().signInWithCredential(googleCredential)
-      setUserInfo(userInfo);
-      setError(null);
-      setIsLoggedIn(true);
-      console.log(credential)
-      await firebase.auth().signInWithCredential(credential)
-      // return auth().signInWithCredential(googleCredential)
-
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // when user cancels sign in process,
-        Alert.alert('Process Cancelled');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // when in progress already
-        Alert.alert('Process in progress');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // when play services not available
-        Alert.alert('Play services are not available');
-      } 
-      else {
-        // some other error
-        Alert.alert('Something else went wrong... ', error.toString());
-        console.log(error)
-        setError(error);
-      }
-    }
-  }
-
-  const signOut = async()=>{
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      setIsLoggedIn(false);
-    } catch (error) {
-      Alert.alert('Something else went wrong... ', error.toString());
-    }
-  }
 
   const getCurrentUserInfo = async()=>{
     try {
@@ -115,16 +66,24 @@ console.log(props)
       props.passwordChanged(text)
   }
   const onButtonPress = ()=>{
-    console.log(props)
-      const {email, password}= props
+    // console.log(props)
+      const {email, password,navigation}= props
       // if (email) {
         
       // }
-      props.loginUser({email, password}) 
+      props.loginUser({email, password}, navigation) 
       // props.loginUserSuccess({isLoggedIn})
       
       // props.navigation.replace('Dashboard')
       console.log(email, password)
+  }
+
+  const onGoogleButtonPress = ()=>{
+    
+      const {email, password,first_name, last_name, navigation} = props
+      console.log('google',props)
+      props.googleLogin(navigation)
+      
   }
     
         return (
@@ -136,7 +95,7 @@ console.log(props)
                 style={{width:'80%',height:50}}
               />
           
-               <Text style={{alignItems:"center"}}>
+               <Text style={{alignItems:"center", fontFamily:'sans-serif-medium'}}>
                 Do away with to-do
               </Text>
               
@@ -173,13 +132,42 @@ console.log(props)
 
             </View>
            
-          <View style={{flexDirection:'column', alignItems:'center', marginTop:'20%'}}>
+          <View style={{flexDirection:'column', alignItems:'center'}}>
             <FbButton {...props}/>
-            <Text>
-              Signed up with Facebook or Google?
+            <GoogleSigninButton 
+              style={{ width: 192, height: 48, marginTop:'7%' }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={()=>onGoogleButtonPress(props.email, props.password, props.first_name, props.last_name)}
+            />
+        
+      {/* <View style={styles.userInfoContainer}>
+       
+        {isLoggedIn === true ? (
+          <>
+            <Text style={styles.displayTitle}>
+              Welcome {userInfo.user.name}
             </Text>
-            <Text style={{color:'#1ec31e'}}>
-              Tap here to create a password
+            <View style={styles.profileImageContainer}>
+              <Image
+                style={styles.profileImage}
+                source={{
+                  uri: userInfo && userInfo.user && userInfo.user.photo
+                }}
+              />
+            </View>
+          </>
+        ) : null}
+      </View> */}
+
+
+            {/* <Text>
+              Signed up with Facebook or Google?
+            </Text> */}
+            <Text style={{color:'#1ec31e', marginTop:'3%'}}
+              onPress={()=>props.navigation.navigate('Forget')}
+            >
+              Forget Password
             </Text>
           </View>
 
@@ -224,7 +212,17 @@ const styles = StyleSheet.create({
     displayTitle: {
       fontSize: 22,
       color: '#010101'
-    }
+    },
+
+    status: {
+      marginVertical: 20
+    },
+    loggedinMessage: {
+      fontSize: 20,
+      color: 'tomato'
+    },
+    
+
 })
 const mapStateToProps = ({auth}) =>{
   const{email, password, isLoggedIn} = auth
@@ -233,7 +231,7 @@ const mapStateToProps = ({auth}) =>{
   }
 }
 
-export default connect(mapStateToProps, {emailChanged,passwordChanged, loginUser})(SigninScreen);
+export default connect(mapStateToProps, {emailChanged,passwordChanged, loginUser,googleLogin})(SigninScreen);
 
 
 
