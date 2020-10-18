@@ -74,7 +74,7 @@ const pendingScreen = (props) => {
           titleStyle={{
             color: 'green',
           }}
-          title="Want to Avail TaskArabbit more"
+          title="Want to Avail Taskrabbit more"
           onPress={() =>
             props.navigation.navigate('Root', {screen: 'Dashboard'})
           }

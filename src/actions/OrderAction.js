@@ -1,5 +1,9 @@
 import {firebase} from '@react-native-firebase/auth';
-import {Order_History} from './types';
+import {
+  DELIVERY_ORDER_HISTORY,
+  FOOD_ORDER_HISTORY,
+  Order_History,
+} from './types';
 
 export const OrderHistory = (userId) => {
   return (dispatch) => {
@@ -9,7 +13,8 @@ export const OrderHistory = (userId) => {
     firebase
       .database()
       .ref()
-      .child(`user/${userId}/carRide`)
+      .child(`user/${userId}/carRide/`)
+
       .on('value', (snapshot) => {
         console.log(snapshot.val());
         const data = snapshot.val();
@@ -34,7 +39,7 @@ export const DeliveryOrderHistory = (userId) => {
     firebase
       .database()
       .ref()
-      .child(`user/${userId}/delivery`)
+      .child(`user/${userId}/delivery/`)
       .on('value', (snapshot) => {
         console.log(snapshot.val());
         const data = snapshot.val();
@@ -47,7 +52,32 @@ export const DeliveryOrderHistory = (userId) => {
             instruction: data[key].instruction,
           });
         }
-        dispatch({type: Order_History, payload: TemArr});
+        dispatch({type: DELIVERY_ORDER_HISTORY, payload: TemArr});
+      });
+  };
+};
+
+export const FoodOrderHistory = (userId) => {
+  return (dispatch) => {
+    var userId = firebase.auth().currentUser.uid;
+    firebase
+      .database()
+      .ref()
+      .child(`user/${userId}/FoodDelivery/`)
+      .on('value', (snapshot) => {
+        console.log(snapshot.val());
+        const data = snapshot.val();
+        const TemArr = [];
+        for (let key in data) {
+          TemArr.push({
+            orderId: key,
+            resturant: data[key].resturant,
+            item: data[key].item,
+            dropoff: data[key].dropoff,
+            // instruction: data[key].instruction,
+          });
+        }
+        dispatch({type: FOOD_ORDER_HISTORY, payload: TemArr});
       });
   };
 };

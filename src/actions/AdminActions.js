@@ -3,12 +3,12 @@ import {firebase} from '@react-native-firebase/auth';
 
 export const orderData = () => {
   return (dispatch) => {
-    var userId = firebase.auth().currentUser.uid;
+    var userId = firebase.auth().uid;
 
     firebase
       .database()
       .ref()
-      .child(`user/${userId}/carRide`)
+      .child(`user/delivery/`)
       .on('value', (snapshot) => {
         console.log('snapshot', snapshot.val());
         const data = snapshot.val();

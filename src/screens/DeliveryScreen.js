@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import DateAndTime from '../components/DateAndTime';
 import LocationSearch from '../components/locationSearch';
-import Details from '../components/Details';
 import Input from '../components/Input';
 import {connect} from 'react-redux';
 import {

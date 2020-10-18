@@ -1,122 +1,19 @@
 import React, {useEffect} from 'react';
-import {FlatList, Text, View, Dimensions} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {Card} from 'react-native-paper';
-import {color} from 'react-native-reanimated';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import {connect} from 'react-redux';
+import {Button} from 'react-native-elements';
+import {OrderHistory} from '../actions/OrderAction';
 // import { Card } from '../components/Card';
-const {height, width, fontScale} = Dimensions.get('window');
 
-const OrderHistoryScreen = (props) => {
-  // console.log('Order History Screen', props);
-  // useEffect(() => {
-  //   props.OrderHistory();
-  // }, []);
-  // useEffect(() => {
-  //   props.DeliveryOrderHistory();
-  // }, []);
+const CarHistoryScreen = (props) => {
+  console.log('Car Order History Screen', props);
+  useEffect(() => {
+    props.OrderHistory();
+  }, []);
   return (
     <View style={{flex: 1, padding: 15}}>
-      <Card
-        onPress={() => props.navigation.navigate('Car Bookings')}
-        style={{
-          height: 50,
-          width: width / 1.3,
-          alignSelf: 'center',
-          padding: 2,
-        }}>
-        <View
-          style={{
-            // justifyContent: 'center',
-            alignItems: 'center',
-
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingTop: 12,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              color: 'green',
-            }}>
-            Car Service History
-          </Text>
-          <SimpleLineIcons
-            name="arrow-right"
-            size={18}
-            style={{fontWeight: 'bold'}}
-          />
-        </View>
-      </Card>
-
-      <Card
-        onPress={() => props.navigation.navigate('Delivery Bookings')}
-        style={{
-          height: 50,
-          width: width / 1.3,
-          alignSelf: 'center',
-          marginTop: 15,
-          padding: 2,
-        }}>
-        <View
-          style={{
-            // justifyContent: 'center',
-            alignItems: 'center',
-
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingTop: 12,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              color: 'green',
-            }}>
-            Delivery Service History
-          </Text>
-          <SimpleLineIcons
-            name="arrow-right"
-            size={18}
-            style={{fontWeight: 'bold'}}
-          />
-        </View>
-      </Card>
-
-      <Card
-        onPress={() => props.navigation.navigate('Resturant Delivery')}
-        style={{
-          height: 50,
-          width: width / 1.3,
-          alignSelf: 'center',
-          marginTop: 15,
-          padding: 2,
-        }}>
-        <View
-          style={{
-            // justifyContent: 'center',
-            alignItems: 'center',
-
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingTop: 12,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              color: 'green',
-            }}>
-            Food Service History
-          </Text>
-          <SimpleLineIcons
-            name="arrow-right"
-            size={18}
-            style={{fontWeight: 'bold'}}
-          />
-        </View>
-      </Card>
-      {/* <FlatList
+      <FlatList
         data={props.orderr}
         keyExtractor={(item) => item.orderId}
         renderItem={({item}) => {
@@ -157,7 +54,7 @@ const OrderHistoryScreen = (props) => {
             </Card>
           );
         }}
-      /> */}
+      />
       {/* <Text>
             Your Order History is Empty
         </Text> */}
@@ -270,5 +167,14 @@ const OrderHistoryScreen = (props) => {
     </View>
   );
 };
+const mapStateToProps = ({auth, order}) => {
+  const {user} = auth;
+  const {orderr} = order;
 
-export default OrderHistoryScreen;
+  return {
+    user,
+    orderr,
+    // delivery,
+  };
+};
+export default connect(mapStateToProps, {OrderHistory})(CarHistoryScreen);

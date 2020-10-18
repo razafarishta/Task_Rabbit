@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -8,7 +7,6 @@ import {
 } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DashboardScreen from './screens/DashboardScreen';
-// import SplashScreen from './src/screens/SplashScreen';
 import SignupScreen from './screens/SignupScreen';
 import SignupScreenTwo from './screens/SignupScreenTwo';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -37,17 +35,15 @@ import AdminScreen from './screens/AdminScreen';
 import ForgetPassword from './screens/ForgetPassword';
 import pendingScreen from './screens/PendingScreen';
 import GroceryScreen from './screens/GroceryScreen';
-// import {loginUser} from '../actions/AuthActions'
-
-// import SignupScreen from './src/screens/SignupScreen';
+import CarHistoryScreen from './screens/CarHistoryScreen';
+import DeliveryHistoryScreen from './screens/DeliveryHistoryScreen';
+import FoodHistoryScreen from './screens/FoodHistoryScreen';
 
 const {height, width, fontScale} = Dimensions.get('window');
 
 const Navigation = (props) => {
-  //  const isLogge
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
   const DashboardTab = () => {
     return (
       <Tab.Navigator tabBarOptions={{showIcon: true, showLabel: true}}>
@@ -59,14 +55,14 @@ const Navigation = (props) => {
             tabBarIcon: () => <AntDesign name="home" size={30} />,
           }}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name="OrderHistory"
           component={OrderHistoryScreen}
           options={{
             title: 'Orders History',
             tabBarIcon: () => <Image source={require('./assets/order.png')} />,
           }}
-        /> */}
+        />
         <Tab.Screen
           name="search"
           component={SearchScreen}
@@ -283,6 +279,44 @@ const Navigation = (props) => {
             headerTitleAlign: 'center',
           }}
         />
+        <Stack.Screen
+          name="Car Bookings"
+          component={CarHistoryScreen}
+          options={{
+            title: 'Car Bookings',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="Delivery Bookings"
+          component={DeliveryHistoryScreen}
+          options={{
+            title: 'Delivery Bookings',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+        />
+
+        <Stack.Screen
+          name="Resturant Delivery"
+          component={FoodHistoryScreen}
+          options={{
+            title: 'Resturant Delivery',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+        />
+
         <Stack.Screen
           name="Notification"
           component={NotficationScreen}

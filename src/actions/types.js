@@ -24,13 +24,20 @@ export const DATE = 'date';
 export const TIME = 'time';
 export const NO_OF_PASSENGER = 'no_of_passenger';
 export const INSTRUCTIONS = 'instructions';
+export const RESTURANT_NAME = 'resturant_name';
+export const ITEM_NAME = 'item_name';
+export const ITEM_QUANTITY = 'item_quantity';
+
 export const CAR = 'car';
 export const DELIVERY = 'delivery';
+export const FOOD = 'food';
 
 export const SHOW_ORDER_DATA = 'show_order_data';
 export const NEW_ORDER = 'new_order';
 
 export const Order_History = 'order_history';
-// export const DELIVERY_ORDER_HISTORY = 'delivery_order_history';
+export const DELIVERY_ORDER_HISTORY = 'delivery_order_history';
+export const FOOD_ORDER_HISTORY = 'food_order_history';
+
 export const CANCEL_ORDER = 'cancel_order';
 export const FORGET_PASSWORD = 'forget_password';
