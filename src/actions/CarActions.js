@@ -50,10 +50,13 @@ export const instructionChanged = (text) => {
   };
 };
 export const carRide = (
-  {pickup, dropoff, date, time, passenger, instruction, response},
+  {pickup, dropoff, date, time, passenger, instruction, response, userID},
   navigation,
 ) => {
+  var userID = firebase.auth().currentUser.uid;
+
   let car = {
+    userID,
     pickup,
     dropoff,
     date,
@@ -61,15 +64,28 @@ export const carRide = (
     passenger,
     instruction,
     response,
+    // userID: firebase.auth.currentUser.uid,
   };
   return (dispatch) => {
-    firebase
-      .database()
-      .ref()
-      .child(`user/${firebase.auth().currentUser.uid}/carRide/`)
-      .push(car);
+    // var userID = firebase.auth().currentUser.uid;
+    firebase.database().ref(`carRide/`).push(car);
     console.log(car);
     navigation.navigate('Root', {screen: 'Pending'});
     dispatch({type: CAR, car});
+    // console.log(car);
+  };
+};
+
+export const carRideData = () => {
+  return (dispatch) => {
+    try {
+      firebase
+        .database()
+        .ref()
+        .child(`carRide/`)
+        .on('value', (snapshot) => {
+          const data = snapshot.val();
+        });
+    } catch (error) {}
   };
 };

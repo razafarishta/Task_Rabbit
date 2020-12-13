@@ -31,13 +31,17 @@ export const ITEM_QUANTITY = 'item_quantity';
 export const CAR = 'car';
 export const DELIVERY = 'delivery';
 export const FOOD = 'food';
+export const GROCERY = 'grocery';
 
 export const SHOW_ORDER_DATA = 'show_order_data';
 export const NEW_ORDER = 'new_order';
 
+export const CAR_RIDE_DATA = 'car_ride_data';
+
 export const Order_History = 'order_history';
 export const DELIVERY_ORDER_HISTORY = 'delivery_order_history';
 export const FOOD_ORDER_HISTORY = 'food_order_history';
+export const GROCERY_ORDER_HISTORY = 'grocery_order_history';
 
 export const CANCEL_ORDER = 'cancel_order';
 export const FORGET_PASSWORD = 'forget_password';

@@ -20,7 +20,7 @@ const OrderHistoryScreen = (props) => {
         onPress={() => props.navigation.navigate('Car Bookings')}
         style={{
           height: 50,
-          width: width / 1.3,
+          width: width / 1.1,
           alignSelf: 'center',
           padding: 2,
         }}>
@@ -31,7 +31,7 @@ const OrderHistoryScreen = (props) => {
 
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingTop: 12,
+            padding: 12,
           }}>
           <Text
             style={{
@@ -53,7 +53,8 @@ const OrderHistoryScreen = (props) => {
         onPress={() => props.navigation.navigate('Delivery Bookings')}
         style={{
           height: 50,
-          width: width / 1.3,
+          width: width / 1.1,
+
           alignSelf: 'center',
           marginTop: 15,
           padding: 2,
@@ -65,7 +66,8 @@ const OrderHistoryScreen = (props) => {
 
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingTop: 12,
+            // paddingTop: 12,
+            padding: 12,
           }}>
           <Text
             style={{
@@ -87,7 +89,7 @@ const OrderHistoryScreen = (props) => {
         onPress={() => props.navigation.navigate('Resturant Delivery')}
         style={{
           height: 50,
-          width: width / 1.3,
+          width: width / 1.1,
           alignSelf: 'center',
           marginTop: 15,
           padding: 2,
@@ -99,7 +101,43 @@ const OrderHistoryScreen = (props) => {
 
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingTop: 12,
+            // paddingTop: 12,
+            padding: 12,
+          }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: 'green',
+            }}>
+            Food Service History
+          </Text>
+          <SimpleLineIcons
+            name="arrow-right"
+            size={18}
+            style={{fontWeight: 'bold'}}
+          />
+        </View>
+      </Card>
+
+      <Card
+        onPress={() => props.navigation.navigate('Grocery Delivery')}
+        style={{
+          height: 50,
+          width: width / 1.1,
+          alignSelf: 'center',
+          marginTop: 15,
+          padding: 2,
+        }}>
+        <View
+          style={{
+            // justifyContent: 'center',
+            alignItems: 'center',
+
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            // paddingTop: 12,
+            padding: 12,
           }}>
           <Text
             style={{

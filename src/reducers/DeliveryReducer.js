@@ -54,6 +54,12 @@ export default (state = INITIAL_STATE, action) => {
     case DELIVERY:
       return {
         ...state,
+        pickup: '',
+        dropoff: '',
+        date: '',
+        time: '',
+        passenger: '',
+        instruction: '',
         response: 'Your goods delivery requeust is pending',
         delivery: action.payload,
       };

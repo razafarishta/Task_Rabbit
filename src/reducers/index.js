@@ -6,6 +6,8 @@ import FoodReducer from '../reducers/FoodReducer';
 
 import AdminReducer from '../reducers/AdminReducer';
 import OrderReducer from '../reducers/OrderReducer';
+import PendingScreen from '../screens/PendingScreen';
+import GroceryReducer from './GroceryReducer';
 
 // import FoodReducer from '../reducers/FoodReducer';
 
@@ -16,5 +18,8 @@ export default combineReducers({
   food: FoodReducer,
   delivery: DeliveryReducer,
   order: OrderReducer,
+  grocery: GroceryReducer,
+  pending: PendingScreen,
+
   // Delivery: DeliveryReducer
 });

@@ -37,8 +37,11 @@ const DeliveryScreen = (props) => {
     props.instructionChanged(text);
   };
   const onButtonPress = () => {
-    const {pickup, dropoff, date, instruction, response} = props;
-    props.goodDelivery({pickup, dropoff, date, instruction, response});
+    const {pickup, dropoff, date, instruction, response, navigation} = props;
+    props.goodDelivery(
+      {pickup, dropoff, date, instruction, response},
+      navigation,
+    );
   };
   return (
     <View style={{flex: 1}}>

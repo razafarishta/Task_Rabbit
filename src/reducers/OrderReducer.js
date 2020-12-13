@@ -2,12 +2,14 @@ import {
   Order_History,
   DELIVERY_ORDER_HISTORY,
   FOOD_ORDER_HISTORY,
+  GROCERY_ORDER_HISTORY,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  orderr: null,
-  delivery: null,
-  food: null,
+  orderr: [],
+  delivery: [],
+  food: [],
+  grocery: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +29,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         food: action.payload,
+      };
+
+    case GROCERY_ORDER_HISTORY:
+      return {
+        ...state,
+        grocery: action.payload,
       };
     default:
       return state;

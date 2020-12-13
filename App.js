@@ -1,16 +1,15 @@
 import 'react-native-gesture-handler';
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 
-import {Provider} from 'react-redux' 
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk'
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import ReduxThunk from 'redux-thunk';
 import reducers from './src/reducers';
 
 import Navigation from './src/NavigationContainer';
-import { BackHandler,Alert } from 'react-native';
+import {BackHandler, Alert} from 'react-native';
 
-const App = ()=>{
-
+const App = () => {
   const backAction = () => {
     Alert.alert('Hold on!', 'Are you sure you want to go back?', [
       {
@@ -29,12 +28,12 @@ const App = ()=>{
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
- 
-  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
-    return(
-      <Provider store={store}>
-        <Navigation />
-      </Provider>
-    )
-}
+
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
+};
 export default App;

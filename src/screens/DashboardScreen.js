@@ -12,33 +12,46 @@ import {Text} from 'react-native-elements';
 const {height, width, fontScale} = Dimensions.get('window');
 
 const DashboardScreen = (props) => {
-  const backAction = () => {
-    Alert.alert('Hold on!', 'Are you sure you want to go back?', [
-      {
-        text: 'Cancel',
-        onPress: () => null,
-        style: 'cancel',
-      },
-      {text: 'YES', onPress: () => BackHandler.exitApp()},
-    ]);
-    return true;
-  };
+  // const backAction = () => {
+  //   Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+  //     {
+  //       text: 'Cancel',
+  //       onPress: () => null,
+  //       style: 'cancel',
+  //     },
+  //     {text: 'YES', onPress: () => BackHandler.exitApp()},
+  //   ]);
+  //   return true;
+  // };
+  // const handleBackButtonClick = () => {
+  //   props.navigation.goBack(null);
+  //   return true;
+  // };
 
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', backAction);
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick());
 
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
+  //   return () =>
+  //     BackHandler.removeEventListener(
+  //       'hardwareBackPress',
+  //       handleBackButtonClick(),
+  //     );
+  // }, []);
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
+        <Image
+          source={require('../assets/show.jpg')}
+          style={{width: width, height: 200, backgroundColor: 'red'}}
+          resizeMode="cover"
+        />
         <View
           style={{
-            marginTop: '44%',
+            // marginTop: 10,
             width: width,
             height: height / 4.7,
             flexDirection: 'row',
+            // backgroundColor: 'red',
           }}>
           <TouchableOpacity
             style={{

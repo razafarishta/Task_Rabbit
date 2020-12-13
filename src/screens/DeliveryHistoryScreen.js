@@ -13,48 +13,54 @@ const DeliveryHistoryScreen = (props) => {
   }, []);
   return (
     <View style={{flex: 1, padding: 15}}>
-      <FlatList
-        data={props.delivery}
-        keyExtractor={(item) => item.orderId}
-        renderItem={({item}) => {
-          return (
-            <Card style={{marginTop: 11}}>
-              <View style={{flexDirection: 'column'}}>
-                <View
-                  style={{
-                    padding: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={{fontWeight: 'bold'}}>{item.pickup}</Text>
-                  <Text style={{}}>Rs 275 </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={{flexDirection: 'column', paddingLeft: 10}}>
-                    <Text>{item.dropoff}</Text>
-                    <Text>{item.passenger}</Text>
+      {props.delivery.length > 0 ? (
+        <FlatList
+          data={props.delivery}
+          keyExtractor={(item) => item.orderId}
+          renderItem={({item}) => {
+            return (
+              <Card style={{marginTop: 11}}>
+                <View style={{flexDirection: 'column'}}>
+                  <View
+                    style={{
+                      padding: 10,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text style={{fontWeight: 'bold'}}>{item.pickup}</Text>
+                    <Text style={{}}>Rs 275 </Text>
                   </View>
-                  <Button
-                    buttonStyle={{
-                      backgroundColor: '#1ec31e',
-                      height: 40,
-                      width: 180,
-                      marginBottom: 15,
-                      marginRight: 5,
-                    }}
-                    // color="#1ec31e"
-                    title="Order Completed"
-                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={{flexDirection: 'column', paddingLeft: 10}}>
+                      <Text>{item.dropoff}</Text>
+                      <Text>{item.passenger}</Text>
+                    </View>
+                    <Button
+                      buttonStyle={{
+                        backgroundColor: '#1ec31e',
+                        height: 40,
+                        width: 180,
+                        marginBottom: 15,
+                        marginRight: 5,
+                      }}
+                      // color="#1ec31e"
+                      title="Order Completed"
+                    />
+                  </View>
                 </View>
-              </View>
-            </Card>
-          );
-        }}
-      />
+              </Card>
+            );
+          }}
+        />
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 16}}>You Delivery History is Empty</Text>
+        </View>
+      )}
       {/* <Text>
             Your Order History is Empty
         </Text> */}

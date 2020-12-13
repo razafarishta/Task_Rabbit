@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import database from '@react-native-firebase/database';
 // import Logo from '../assets'
@@ -37,15 +38,24 @@ const SigninScreen = (props) => {
   const [userInfo, setUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
-  // const saveDataa = async()=>{
-  //   const saveData = await AsyncStorage.setItem(
-  //        'user',
-  //        JSON.stringify({email, password})
-  //     )
-  // }
+
+  const backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'YES', onPress: () => BackHandler.exitApp()},
+    ]);
+    return true;
+  };
   useEffect(() => {
     // saveDataa()
+    BackHandler.addEventListener('hardwareBackPress', backAction);
 
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
     configureGoogleSign();
   }, []);
 

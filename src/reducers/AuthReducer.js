@@ -12,21 +12,25 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER_SUCCESS,
   ISLOGGEDIN_USER,
-  LOGOUT_SUCCESS,SUBMIT_NUMBER, FB_LOGIN_USER, GOOGLE_LOGIN_USER, FORGET_PASSWORD
+  LOGOUT_SUCCESS,
+  SUBMIT_NUMBER,
+  FB_LOGIN_USER,
+  GOOGLE_LOGIN_USER,
+  FORGET_PASSWORD,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  email: 'admin@gmail.com',
+  password: 'adminadmin',
   first_name: '',
   last_name: '',
   postal: '',
-  phone:'',
+  phone: '',
   user: null,
   error: '',
   loading: false,
   isLoggedIn: false,
-  obj:null
+  obj: null,
   // isAuthenticated:false
 };
 export default (state = INITIAL_STATE, action) => {
@@ -42,10 +46,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, last_name: action.payload};
     case POSTAL_CHANGED:
       return {...state, postal: action.payload};
-      case PHONE_CHANGED:
-        return{...state, phone: action.payload}
-        case SUBMIT_NUMBER:
-          return{...state, phoneuser: action.payload, phone:''}
+    case PHONE_CHANGED:
+      return {...state, phone: action.payload};
+    case SUBMIT_NUMBER:
+      return {...state, phoneuser: action.payload, phone: ''};
     case SIGNUP_USER:
       return {...state, loading: true, user: action.payload};
     case SIGNUP_USER_SUCCESS:
@@ -54,12 +58,12 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, email: '', password: ''};
     case LOGIN_USER:
       return {...state, user: action.payload};
-      case FORGET_PASSWORD:
-        return{...state, email:action.payload}
-      case FB_LOGIN_USER:
-        return{...state, obj: action.payload}
-        case GOOGLE_LOGIN_USER:
-          return{...state, obj: action.payload}
+    case FORGET_PASSWORD:
+      return {...state, email: action.payload};
+    case FB_LOGIN_USER:
+      return {...state, obj: action.payload};
+    case GOOGLE_LOGIN_USER:
+      return {...state, obj: action.payload};
     case LOGOUT_SUCCESS:
       return {
         ...state,

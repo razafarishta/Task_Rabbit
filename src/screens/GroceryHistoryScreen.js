@@ -3,20 +3,20 @@ import {FlatList, Text, View} from 'react-native';
 import {Card} from 'react-native-paper';
 import {connect} from 'react-redux';
 import {Button} from 'react-native-elements';
-import {FoodOrderHistory} from '../actions/OrderAction';
+import {GroceryOrderHistory} from '../actions/OrderAction';
 // import { Card } from '../components/Card';
 
-const FoodHistoryScreen = (props) => {
-  console.log('Food Order History Screen', props);
+const GroceryHistoryScreen = (props) => {
+  console.log('Gocery History Screen', props);
   useEffect(() => {
-    props.FoodOrderHistory();
+    props.GroceryOrderHistory();
   }, []);
   return (
     <View style={{flex: 1, padding: 15}}>
-      {props.food.length > 0 ? (
+      {props.grocery.length > 0 ? (
         <FlatList
-          data={props.food}
-          keyExtractor={(item) => item.orderId}
+          data={props.grocery}
+          keyExtractor={(item) => item.groceryorderId}
           renderItem={({item}) => {
             return (
               <Card style={{marginTop: 11}}>
@@ -27,7 +27,7 @@ const FoodHistoryScreen = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Text style={{fontWeight: 'bold'}}>{item.resturant}</Text>
+                    <Text style={{fontWeight: 'bold'}}>{item.dropoff}</Text>
                     <Text style={{}}>Rs 275 </Text>
                   </View>
                   <View
@@ -37,13 +37,13 @@ const FoodHistoryScreen = (props) => {
                     }}>
                     <View style={{flexDirection: 'column', paddingLeft: 10}}>
                       <Text>{item.item}</Text>
-                      <Text>{item.dropoff}</Text>
+                      <Text>{item.quantity}</Text>
                     </View>
                     <Button
                       buttonStyle={{
                         backgroundColor: '#1ec31e',
                         height: 40,
-                        width: 140,
+                        width: 180,
                         marginBottom: 15,
                         marginRight: 5,
                       }}
@@ -58,7 +58,7 @@ const FoodHistoryScreen = (props) => {
         />
       ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 16}}>You Food History is Empty</Text>
+          <Text style={{fontSize: 16}}>You Grocery History is Empty</Text>
         </View>
       )}
     </View>
@@ -66,12 +66,14 @@ const FoodHistoryScreen = (props) => {
 };
 const mapStateToProps = ({auth, order}) => {
   const {user} = auth;
-  const {food} = order;
+  const {grocery} = order;
 
   return {
     user,
-    food,
+    grocery,
     // delivery,
   };
 };
-export default connect(mapStateToProps, {FoodOrderHistory})(FoodHistoryScreen);
+export default connect(mapStateToProps, {GroceryOrderHistory})(
+  GroceryHistoryScreen,
+);

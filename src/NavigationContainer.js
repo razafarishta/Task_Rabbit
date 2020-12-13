@@ -38,6 +38,11 @@ import GroceryScreen from './screens/GroceryScreen';
 import CarHistoryScreen from './screens/CarHistoryScreen';
 import DeliveryHistoryScreen from './screens/DeliveryHistoryScreen';
 import FoodHistoryScreen from './screens/FoodHistoryScreen';
+import GroceryHistoryScreen from './screens/GroceryHistoryScreen';
+import CarOrders from './screens/CarOrders';
+import {goodDelivery} from './actions/DeliveryActions';
+import GroceryOrders from './screens/GroceryOrders';
+import FoodOrders from './screens/FoodOrders';
 
 const {height, width, fontScale} = Dimensions.get('window');
 
@@ -213,7 +218,7 @@ const Navigation = (props) => {
           component={GroceryScreen}
           options={{
             headerShown: 'false',
-            title: 'Food',
+            title: 'Grocery',
             headerTintColor: 'green',
             headerTitleAlign: 'center',
           }}
@@ -318,6 +323,19 @@ const Navigation = (props) => {
         />
 
         <Stack.Screen
+          name="Grocery Delivery"
+          component={GroceryHistoryScreen}
+          options={{
+            title: 'Grocery Delivery',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+        />
+
+        <Stack.Screen
           name="Notification"
           component={NotficationScreen}
           options={{
@@ -362,35 +380,25 @@ const Navigation = (props) => {
           component={Auth}
           options={{headerShown: false}}
         />
-
-        {/* <Stack.Screen name="Signin" component={SigninScreen} options={{headerShown:false}}/> */}
-
         {/* <Stack.Screen
-          name="OrderHistory"
-          component={OrderHistoryScreen}
-          options={{
-            title: 'Order History',
-            
-            headerTintColor: 'green',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-          }}
+          name="CarOrder"
+          component={CarOrders}
+          options={{headerShown: false}}
         /> */}
-
         {/* <Stack.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            title: 'Search',
-            
-            headerTintColor: 'green',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-          }}
+          name="GoodOrder"
+          component={Deliver}
+          options={{headerShown: false}}
+        /> */}
+        {/* <Stack.Screen
+          name="Grocer"
+          component={GroceryOrders}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FoodOrder"
+          component={FoodOrders}
+          options={{headerShown: false}}
         /> */}
       </Stack.Navigator>
     </NavigationContainer>

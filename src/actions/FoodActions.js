@@ -47,7 +47,10 @@ export const foodDelivery = (
   {resturant, item, quantity, dropoff, instruction, response},
   navigation,
 ) => {
+  var userID = firebase.auth().currentUser.uid;
+
   let food = {
+    userID,
     resturant,
     item,
     quantity,
@@ -56,11 +59,7 @@ export const foodDelivery = (
     response,
   };
   return (dispatch) => {
-    firebase
-      .database()
-      .ref()
-      .child(`user/${firebase.auth().currentUser.uid}/FoodDelivery/`)
-      .push(food);
+    firebase.database().ref(`FoodDelivery/`).push(food);
     console.log(food);
     navigation.navigate('Root', {screen: 'Pending'});
 

@@ -1,31 +1,35 @@
 import {
-  PICKUP_ADDRESS,
   DROPOFF_ADDRESS,
+  ITEM_NAME,
+  ITEM_QUANTITY,
   DATE,
   TIME,
-  NO_OF_PASSENGER,
   INSTRUCTIONS,
-  CAR,
+  GROCERY,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  pickup: '',
+  item: '',
+  quantity: '',
   dropoff: '',
   date: '',
   time: '',
-  passenger: '',
   instruction: '',
-  car: null,
-  response: '',
+  grocery: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('carActions', action);
+  console.log('DeliveryActions', action);
   switch (action.type) {
-    case PICKUP_ADDRESS:
+    case ITEM_NAME:
       return {
         ...state,
-        pickup: action.payload,
+        item: action.payload,
+      };
+    case ITEM_QUANTITY:
+      return {
+        ...state,
+        quantity: action.payload,
       };
     case DROPOFF_ADDRESS:
       return {
@@ -42,28 +46,24 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         time: action.payload,
       };
-    case NO_OF_PASSENGER:
-      return {
-        ...state,
-        passenger: action.payload,
-      };
+    // case NO_OF_PASSENGER:
+    //     return{
+    //         ...state,
+    //         passenger: action.payload
+    //     }
     case INSTRUCTIONS:
       return {
         ...state,
         instruction: action.payload,
       };
-    case CAR:
+    case GROCERY:
       return {
         ...state,
-        response: 'YOUR CAR BOOKING IS PENDING',
-        // response: action.payload,
-        pickup: '',
+        item: '',
+        quantity: '',
         dropoff: '',
-        date: '',
-        time: '',
-        passenger: '',
         instruction: '',
-        car: action.payload,
+        grocery: action.payload,
       };
     default:
       return state;

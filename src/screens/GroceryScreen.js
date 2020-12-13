@@ -9,12 +9,62 @@ import {
 // import {Card} from 'react-native-paper';
 import {Card} from '../components/Card';
 import Input from '../components/Input';
+import {connect} from 'react-redux';
+import {
+  dropoffChanged,
+  dateChanged,
+  timeChanged,
+  instructionChanged,
+} from '../actions/CarActions';
+import {itemChanged, quantityChanged} from '../actions/FoodActions';
+import {groceryDelivery} from '../actions/GroceryActions';
 const {height, width, fontScale} = Dimensions.get('window');
 
-const GroceryScreen = () => {
+const GroceryScreen = (props) => {
   const [pressed, setPressed] = useState(false);
   const onpressedButon = () => {
     setPressed(true);
+  };
+
+  const onItemChange = (text) => {
+    props.itemChanged(text);
+  };
+  const onQuantityChange = (text) => {
+    props.quantityChanged(text);
+  };
+  const onPickupChange = (text) => {
+    props.pickupChanged(text);
+  };
+
+  const onDropoffChange = (text) => {
+    props.dropoffChanged(text);
+  };
+
+  const onDateChange = (text) => {
+    props.dateChanged(text);
+    console.log(props);
+  };
+  const onTimeChange = (text) => {
+    props.timeChanged(text);
+  };
+
+  const onInstructionChange = (text) => {
+    props.instructionChanged(text);
+  };
+  const onButtonPress = () => {
+    const {
+      item,
+      quantity,
+      dropoff,
+      date,
+      instruction,
+      response,
+      navigation,
+    } = props;
+    props.groceryDelivery(
+      {item, quantity, dropoff, date, instruction, response},
+      navigation,
+    );
   };
   return (
     <View style={{flex: 1}}>
@@ -22,11 +72,22 @@ const GroceryScreen = () => {
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled">
         <Card>
-          <Input placeholder="Resturant Name" label="Resturant Name : " />
-        </Card>
-        <Card>
-          <Input placeholder="Order" label="Item Name : " />
-          <Input placeholder="no of item(S)" label="Quantity" />
+          <Input
+            placeholder="Order"
+            label="Item Name : "
+            onChangeText={(item) => {
+              onItemChange(item);
+            }}
+            value={props.item}
+          />
+          <Input
+            placeholder="no of item(S)"
+            label="Quantity"
+            onChangeText={(quantity) => {
+              onQuantityChange(quantity);
+            }}
+            value={props.quantity}
+          />
 
           <TouchableOpacity
             onPress={onpressedButon}
@@ -49,8 +110,22 @@ const GroceryScreen = () => {
           ) : null}
         </Card>
         <Card>
-          <Input placeholder="Address" label="Your Address : " />
-          <Input placeholder="Any Instruction" label="Instruction : " />
+          <Input
+            placeholder="Address"
+            label="Your Address : "
+            onChangeText={(dropoff) => {
+              onDropoffChange(dropoff);
+            }}
+            value={props.dropoff}
+          />
+          <Input
+            placeholder="Any Instruction"
+            label="Instruction : "
+            onChangeText={(instruction) => {
+              onInstructionChange(instruction);
+            }}
+            value={props.instruction}
+          />
         </Card>
 
         <TouchableOpacity
@@ -63,11 +138,36 @@ const GroceryScreen = () => {
             alignItems: 'center',
             marginTop: 15,
             marginBottom: 15,
-          }}>
+          }}
+          onPress={() =>
+            onButtonPress(
+              props.dropoff,
+              props.item,
+              props.quantity,
+              props.instruction,
+            )
+          }>
           <Text style={{color: '#fff', fontSize: 16}}>Done</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
   );
 };
-export default GroceryScreen;
+
+const mapStateToProps = ({grocery}) => {
+  const {item, quantity, dropoff, instruction} = grocery;
+  return {
+    item,
+    quantity,
+    dropoff,
+    instruction,
+  };
+};
+export default connect(mapStateToProps, {
+  quantityChanged,
+  itemChanged,
+  dropoffChanged,
+  instructionChanged,
+  dateChanged,
+  groceryDelivery,
+})(GroceryScreen);

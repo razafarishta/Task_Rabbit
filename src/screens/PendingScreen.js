@@ -1,15 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {cancelOrder} from '../actions/PendingAction';
+import {cancelOrder, DeliverycancelOrder} from '../actions/PendingAction';
+import {OrderHistory, DeliveryOrderHistory} from '../actions/OrderAction';
+
 import {showMessage} from 'react-native-flash-message';
 const pendingScreen = (props) => {
   console.log('pending', props);
+  const currentOrder = props.orderr.find((v) => v.orderId);
+  const deliverycurrentOrder = props.delivery.find((v) => v.deliveryorderId);
+
+  console.log(currentOrder, 'current Order');
+  console.log(deliverycurrentOrder, 'delivery current Order');
+
+  useEffect(() => {
+    props.OrderHistory();
+    props.DeliveryOrderHistory();
+  }, []);
+
   const onButtonPress = () => {
     const {navigation} = props;
-    props.cancelOrder(navigation);
+    props.cancelOrder(navigation, currentOrder?.orderId);
+
+    props.DeliverycancelOrder(
+      navigation,
+      deliverycurrentOrder?.deliveryorderId,
+    );
   };
 
   return (
@@ -83,4 +101,20 @@ const pendingScreen = (props) => {
     </View>
   );
 };
-export default connect(null, {cancelOrder})(pendingScreen);
+
+const mapStateToProps = ({order}) => {
+  const {orderr} = order;
+  const {delivery} = order;
+
+  return {
+    orderr,
+    delivery,
+  };
+};
+
+export default connect(mapStateToProps, {
+  cancelOrder,
+  OrderHistory,
+  DeliveryOrderHistory,
+  DeliverycancelOrder,
+})(pendingScreen);
